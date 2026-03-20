@@ -8,12 +8,12 @@
 ## 🚀 The Mission
 Medical AI often fails in production due to numerical instability and "black-box" decisions. **SAWL-Net** (Statistical-Wave Attention Lightweight Network) is a resource-efficient architecture that solves this. By fusing **Pearson/Spearman/Cosine similarities** with **Wavelet-inspired Conv1D modules**, we achieve near-perfect classification on histopathology benchmarks while staying lightweight enough for edge deployment.
 
-> [cite_start]**Why this implementation?** Unlike vanilla models, we treat **engineering-level safeguards** (dtype-safety, robust ranking, and exponential remapping) as core architectural features to ensure 100% reproducible results[cite: 477, 486].
+> **Why this implementation?** Unlike vanilla models, we treat **engineering-level safeguards** (dtype-safety, robust ranking, and exponential remapping) as core architectural features to ensure 100% reproducible results.
 
 ---
 
 ## 📊 Performance at a Glance
-[cite_start]Results obtained using our deterministic 70/10/20 stratified splits[cite: 562]:
+Results obtained using our deterministic 70/10/20 stratified splits:
 
 | Dataset | Accuracy | F1-Score | AUC (Macro) |
 | :--- | :---: | :---: | :---: |
@@ -24,21 +24,21 @@ Medical AI often fails in production due to numerical instability and "black-box
 ---
 
 ## 🏗️ Core Architecture
-[cite_start]The model uses a **MobileNetV2** backbone (2.3M parameters) [cite: 556] enhanced by a dual-branch attention strategy:
+The model uses a **MobileNetV2** backbone (2.3M parameters)  enhanced by a dual-branch attention strategy:
 
-1. [cite_start]**Statistical Attention Path:** Computes channel-wise similarity (Pearson & Spearman) against an aggregate reference map to identify high-confidence features[cite: 496, 534].
-2. [cite_start]**Wavelet-inspired Conv1D:** Treats channel outputs as 1D amplitude sequences to detect local inter-channel motifs[cite: 490, 525].
-3. [cite_start]**Calibrated Exponential Remapping:** A grid-tuned mapping function that prevents gradient saturation and ensures stable training[cite: 512, 521].
+1. **Statistical Attention Path:** Computes channel-wise similarity (Pearson & Spearman) against an aggregate reference map to identify high-confidence features.
+2. **Wavelet-inspired Conv1D:** Treats channel outputs as 1D amplitude sequences to detect local inter-channel motifs.
+3. **Calibrated Exponential Remapping:** A grid-tuned mapping function that prevents gradient saturation and ensures stable training.
 
 
 
 ---
 
 ## 🛡️ Stability & Reproducibility (The "Secret Sauce")
-[cite_start]This repo isn't just code; it's a reproducible research harness[cite: 492, 653]:
-* [cite_start]**Dtype-Safe Ops:** All rank and correlation computations are cast to `float32` with safe-division ($\epsilon=1 \times 10^{-8}$) to avoid NaNs[cite: 538, 671].
-* [cite_start]**Robust Spearman Ranking:** Implements batched double-argsort with tie-handling for stable rank estimates[cite: 538, 655].
-* [cite_start]**Interpretability:** Built-in **Grad-CAM** pipeline to visualize which tissue regions are driving the model's decisions[cite: 639, 696].
+This repo isn't just code; it's a reproducible research harness[cite: 492, 653]:
+* **Dtype-Safe Ops:** All rank and correlation computations are cast to `float32` with safe-division ($\epsilon=1 \times 10^{-8}$) to avoid NaNs.
+* **Robust Spearman Ranking:** Implements batched double-argsort with tie-handling for stable rank estimates.
+* **Interpretability:** Built-in **Grad-CAM** pipeline to visualize which tissue regions are driving the model's decisions.
 
 ---
 
